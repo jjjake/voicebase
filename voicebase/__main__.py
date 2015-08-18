@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Usage: vb [IDENTIFIER] [FILE] [options...]
+"""Usage: vb [IDENTIFIER] [FILE] [options] ...
 
 IA Voice Base cli.
 
