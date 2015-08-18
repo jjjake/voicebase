@@ -1,0 +1,4 @@
+$ git clone git@git.archive.org:jake/voicebase.git
+$ cd voicebase
+$ make binary
+$ ./vb --help

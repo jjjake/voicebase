@@ -25,14 +25,14 @@ from voicebase.core import VoiceBase
 if __name__ == '__main__':
     args = docopt(__doc__)
 
-    vb_item = VoiceBase(args['IDENTIFIER'], args['FILE'], args['--config'][0])
+    vb = VoiceBase(args['IDENTIFIER'], args['FILE'], args['--config'][0])
     if args['--upload']:
-        vb_item.upload_media()
+        vb.upload_media()
     elif args['--get-status']:
-        vb_item.get_file_status()
+        vb.get_file_status()
     elif args['--get-metadata']:
-        vb_item.get_file_metadata()
+        vb.get_file_metadata()
     elif args['--get-transcript']:
-        vb_item.get_transcript()
+        vb.get_transcript()
     else:
-        vb_item.list()
+        vb.list()
