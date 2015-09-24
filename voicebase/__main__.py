@@ -9,11 +9,12 @@ Arguments:
 
 Options:
     -h --help
-    -c --config CONFIG   Config file to use [default: vb.ini]
-    -u --upload          Upload the FILE for transcription.
-    -g --get-status      Get the status of FILE.
-    -m --get-metadata    Get Voice Base FILE metadata.
-    -t --get-transcript  Get Voice Base FILE metadata.
+    -c --config CONFIG           Config file to use. [default: vb.ini]
+    -m --media-id ID             MediaId for FILE.
+    -u --upload                  Upload the FILE for transcription.
+    -g --get-status              Get the status of FILE.
+    -t --get-transcript FORMAT   Get Voice Base FILE transcript.
+    -G --get-analytics           Get Voice Base FILE topics, keywords, etc..
 """
 from __future__ import unicode_literals, print_function
 
@@ -22,17 +23,30 @@ from docopt import docopt
 from voicebase.core import VoiceBase
 
 
-if __name__ == '__main__':
+def main():
     args = docopt(__doc__)
 
-    vb = VoiceBase(args['IDENTIFIER'], args['FILE'], args['--config'][0])
+    media_id = args['--media-id'][0] if args['--media-id'] else None
+    vb = VoiceBase(args['IDENTIFIER'],
+                   args['FILE'],
+                   args['--config'][0],
+                   media_id)
+
     if args['--upload']:
-        vb.upload_media()
+        r = vb.upload_media()
     elif args['--get-status']:
-        vb.get_file_status()
-    elif args['--get-metadata']:
-        vb.get_file_metadata()
+        r = vb.get_file_status()
     elif args['--get-transcript']:
-        vb.get_transcript()
+        r = vb.get_file_transcript(args['--get-transcript'][0])
+    elif args['--get-analytics']:
+        r = vb.get_file_analytics()
+    elif args['--media-id']:
+        r = vb.get_file_analytics()
     else:
-        vb.list()
+        r = vb.list()
+    print(r.content)
+    #print(r.content.decode('utf-8'))
+
+
+if __name__ == '__main__':
+    main()
